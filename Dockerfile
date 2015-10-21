@@ -3,9 +3,14 @@ MAINTAINER Julian Ospald <hasufell@gentoo.org>
 
 ##### PACKAGE INSTALLATION #####
 
-ENV TOMCAT_VER=8
-ENV ECLIPSE_ECJ_VER=4.4
-ENV TOMCAT_SERVLET_VER=3.1
+ENV TOMCAT_VER=8 \
+	ECLIPSE_ECJ_VER=4.4 \
+	TOMCAT_SERVLET_VER=3.1 \
+	CATALINA_HOME=/usr/share/tomcat-8 \
+	CATALINA_BASE=/var/lib/tomcat-8 \
+	CATALINA_TMPDIR=/var/tmp/tomcat-8 \
+	CATALINA_USER=tomcat \
+	CATALINA_GROUP=tomcat
 
 # copy paludis config
 COPY ./config/paludis /etc/paludis
