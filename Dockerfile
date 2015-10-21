@@ -29,9 +29,10 @@ RUN etc-update --automode -5
 
 ################################
 
-
-# set up tomcat
-RUN /usr/share/tomcat-8/gentoo/tomcat-instance-manager.bash --create
+# fix tomcat config creation script
+COPY ./tomcat-im-script.patch /tomcat-im-script.patch
+RUN cd /usr/share/tomcat-${TOMCAT_VER}/gentoo && \
+	patch -p0 -i /tomcat-im-script.patch
 
 # default tomcat port
 EXPOSE 8080

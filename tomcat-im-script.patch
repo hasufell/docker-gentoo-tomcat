@@ -1,0 +1,75 @@
+--- tomcat-instance-manager.bash
++++ tomcat-instance-manager.bash
+@@ -1,5 +1,5 @@
+ #!/bin/bash
+-# Copyright 1999-2014 Gentoo Foundation
++# Copyright 1999-2015 Gentoo Foundation
+ # Distributed under the terms of the GNU General Public License v2
+ # Author: Ralph Sennhauser <sera@gentoo.org>
+ 
+@@ -8,6 +8,33 @@
+ 	exit 1
+ }
+ 
++dir_is_empty() {
++	# usage:
++	#  dir_is_empty <some-dir>
++	#
++	# returns 2 if the dir does not even exist
++	# returns 1 if the dir is not empty
++	# returns 0 (success) if the dir exists and is empty
++
++	local dir=$1
++	local files
++
++	if [[ ! -e ${dir} ]] ; then
++		return 2
++	fi
++
++	shopt -s nullglob dotglob     # To include hidden files
++	files=( "${dir}"/* )
++	shopt -u nullglob dotglob
++
++	if [[ ${#files[@]} -eq 0 ]]; then
++		return 0
++	else
++		return 1
++	fi
++
++}
++
+ usage() {
+ 	cat <<EOL
+ Usage: ${BASH_SOURCE} <--create|--remove|--help> [--suffix s][--user u][--group g]
+@@ -96,9 +123,11 @@
+ test_can_deploy() {
+ 	local no_deploy target
+ 	for target in "${all_targets[@]}"; do
+-		if [[ -e "${target}" ]]; then 
+-			echo "Error: '${target}' already exists."
+-			no_deploy=yes
++		if [[ -e "${target}" ]]; then
++			if ! dir_is_empty "${target}" ; then
++				echo "Error: '${target}' already exists and is not empty."
++				no_deploy=yes
++			fi
+ 		fi
+ 	done
+ 	if [[ -n "${no_deploy}" ]]; then
+@@ -132,6 +161,7 @@
+ 	mkdir -p "${instance_base}"/{work,webapps} || die
+ 	mkdir -p "${instance_logs}" || die
+ 	mkdir -p "${instance_temp}" || die
++	mkdir -p "${instance_conf}" || die
+ 
+ 	cp -r "${tomcat_home}"/webapps/ROOT "${instance_base}"/webapps || die
+ 
+@@ -143,7 +173,7 @@
+ 
+ 	# initial config #
+ 
+-	cp -r "${tomcat_home}"/conf "${instance_conf}" || die
++	cp -r "${tomcat_home}"/conf/* "${instance_conf}"/ || die
+ 
+ 	sed -i -e "s|\${catalina.base}/logs|${instance_logs}|" \
+ 		"${instance_conf}"/logging.properties || die
