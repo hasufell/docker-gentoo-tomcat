@@ -37,13 +37,4 @@ RUN cd /usr/share/tomcat-${TOMCAT_VER}/gentoo && \
 # default tomcat port
 EXPOSE 8080
 
-# :/
-# make sure this is what we get in /etc/init.d/tomcat-*
-CMD "$(java-config -o home)"/bin/java \
-	-Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager \
-	-Djava.util.logging.config.file=/var/lib/tomcat-${TOMCAT_VER}/conf/logging.properties \
-	-Dcatalina.base=/var/lib/tomcat-${TOMCAT_VER} \
-	-Dcatalina.home=/usr/share/tomcat-${TOMCAT_VER} \
-	-Djava.io.tmpdir=/var/tmp/tomcat-${TOMCAT_VER} \
-	-classpath /usr/share/tomcat-${TOMCAT_VER}/bin/bootstrap.jar:/usr/share/tomcat-${TOMCAT_VER}/bin/tomcat-juli.jar:/usr/share/tomcat-${TOMCAT_VER}/lib/annotations-api.jar:/usr/share/tomcat-${TOMCAT_VER}/lib/catalina-ant.jar:/usr/share/tomcat-${TOMCAT_VER}/lib/catalina-ha.jar:/usr/share/tomcat-${TOMCAT_VER}/lib/catalina-storeconfig.jar:/usr/share/tomcat-${TOMCAT_VER}/lib/catalina-tribes.jar:/usr/share/tomcat-${TOMCAT_VER}/lib/catalina.jar:/usr/share/tomcat-${TOMCAT_VER}/lib/jasper-el.jar:/usr/share/tomcat-${TOMCAT_VER}/lib/jasper.jar:/usr/share/tomcat-${TOMCAT_VER}/lib/tomcat-api.jar:/usr/share/tomcat-${TOMCAT_VER}/lib/tomcat-coyote.jar:/usr/share/tomcat-${TOMCAT_VER}/lib/tomcat-dbcp.jar:/usr/share/tomcat-${TOMCAT_VER}/lib/tomcat-i18n-es.jar:/usr/share/tomcat-${TOMCAT_VER}/lib/tomcat-i18n-fr.jar:/usr/share/tomcat-${TOMCAT_VER}/lib/tomcat-i18n-ja.jar:/usr/share/tomcat-${TOMCAT_VER}/lib/tomcat-jni.jar:/usr/share/tomcat-${TOMCAT_VER}/lib/tomcat-util-scan.jar:/usr/share/tomcat-${TOMCAT_VER}/lib/tomcat-util.jar:/usr/share/tomcat-${TOMCAT_VER}/lib/tomcat-websocket.jar:/usr/share/tomcat-${TOMCAT_VER}/lib/websocket-api.jar:/usr/share/eclipse-ecj-${ECLIPSE_ECJ_VER}/lib/ecj.jar:/usr/share/tomcat-servlet-api-${TOMCAT_SERVLET_VER}/lib/el-api.jar:/usr/share/tomcat-servlet-api-${TOMCAT_SERVLET_VER}/lib/jsp-api.jar:/usr/share/tomcat-servlet-api-${TOMCAT_SERVLET_VER}/lib/servlet-api.jar org.apache.catalina.startup.Bootstrap \
-	start
+CMD /usr/share/tomcat-8/bin/catalina.sh run
