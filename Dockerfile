@@ -21,9 +21,6 @@ RUN chgrp paludisbuild /dev/tty && cave resolve -c world -x
 # install tomcat set
 RUN chgrp paludisbuild /dev/tty && cave resolve -c tomcat -x
 
-# install tools set
-RUN chgrp paludisbuild /dev/tty && cave resolve -c tools -x
-
 # update etc files... hope this doesn't screw up
 RUN etc-update --automode -5
 
