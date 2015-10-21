@@ -34,4 +34,4 @@ RUN cd /usr/share/tomcat-${TOMCAT_VER}/gentoo && \
 # default tomcat port
 EXPOSE 8080
 
-CMD /usr/share/tomcat-8/bin/catalina.sh run
+CMD /usr/share/tomcat-${TOMCAT_VER}/bin/catalina.sh run
