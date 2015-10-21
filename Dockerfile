@@ -31,6 +31,8 @@ COPY ./tomcat-im-script.patch /tomcat-im-script.patch
 RUN cd /usr/share/tomcat-${TOMCAT_VER}/gentoo && \
 	patch -p0 -i /tomcat-im-script.patch
 
+RUN mkdir -p /var/log/tomcat-${TOMCAT_VER} /var/tmp/tomcat-${TOMCAT_VER}
+
 # default tomcat port
 EXPOSE 8080
 
