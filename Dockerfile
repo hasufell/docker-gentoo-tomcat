@@ -41,4 +41,4 @@ RUN mkdir -p /var/log/tomcat-${TOMCAT_VER} /var/tmp/tomcat-${TOMCAT_VER}
 # default tomcat port
 EXPOSE 8080
 
-CMD /usr/share/tomcat-${TOMCAT_VER}/bin/catalina.sh run
+CMD exec /usr/share/tomcat-${TOMCAT_VER}/bin/catalina.sh run
