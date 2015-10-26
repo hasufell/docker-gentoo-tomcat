@@ -38,6 +38,11 @@ RUN cd /usr/share/tomcat-${TOMCAT_VER}/gentoo && \
 
 RUN mkdir -p /var/log/tomcat-${TOMCAT_VER} /var/tmp/tomcat-${TOMCAT_VER}
 
+# fix classpath in catalina.sh
+RUN sed -i \
+	-e 's/CLASSPATH=`java-config/CLASSPATH=`java-config --with-dependencies/' \
+	/usr/share/tomcat-${TOMCAT_VER}/bin/catalina.sh
+
 # default tomcat port
 EXPOSE 8080
 
