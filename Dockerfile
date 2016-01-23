@@ -31,11 +31,6 @@ RUN etc-update --automode -5
 
 ################################
 
-# fix tomcat config creation script
-COPY ./tomcat-im-script.patch /tomcat-im-script.patch
-RUN cd /usr/share/tomcat-${TOMCAT_VER}/gentoo && \
-	patch -p0 -i /tomcat-im-script.patch
-
 RUN mkdir -p /var/log/tomcat-${TOMCAT_VER} /var/tmp/tomcat-${TOMCAT_VER}
 
 # fix classpath in catalina.sh
